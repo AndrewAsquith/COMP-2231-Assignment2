@@ -12,14 +12,17 @@ package com.andrewasquith.comp2231.assignment2.question1;
 import jsjf.exceptions.EmptyCollectionException;
 
 /**
- * Exercises the funcionality of the ArrayStack
+ * Exercises the functionality of the ArrayStack
  * It is implemented identically to LinkedDropOutStackDriver 
  * so the output can be compared more easily 
  * The two implementations differ in the "full stack" behaviour
- *
  */
 public class ArrayStackDriver {
 
+	/**
+	 * Runs the tests and outputs the results
+	 * @param args ignored
+	 */
 	public static void main(String[] args) {
 
 		// new stack of Integers with capacity of 4
@@ -38,8 +41,7 @@ public class ArrayStackDriver {
 			System.out.println("Caught Exception: " + ex.getMessage());
 		}
 		System.out.println();
-		
-		
+
 		System.out.println("Peek empty stack");
 		try {
 			theStack.peek();
@@ -47,8 +49,6 @@ public class ArrayStackDriver {
 			System.out.println("Caught Exception: " + ex.getMessage());
 		}
 		System.out.println();
-
-
 
 		System.out.println("Push 1 onto stack");
 		theStack.push(new Integer(1));
@@ -105,5 +105,4 @@ public class ArrayStackDriver {
 		System.out.println(theStack);
 		System.out.println();
 	}
-
 }

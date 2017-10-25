@@ -6,7 +6,9 @@
  */
 package com.andrewasquith.comp2231.assignment2.question3;
 
-// import the Arrays class for the copyOf method
+/**
+ * Import the Arrays class for the copyOf method
+ */
 import java.util.Arrays;
 
 /**

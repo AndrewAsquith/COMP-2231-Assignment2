@@ -13,10 +13,13 @@ package com.andrewasquith.comp2231.assignment2.question3;
  * The classs also contains a helper method for friendly printing after each operation
  * and accepts an optional debug argument from the command line that will cause
  * the Deque to print it's internal array layout after each operation
- *
  */
 public class ArrayDequeDriver {
 
+	/**
+	 * Runs the tests and outputs the results
+	 * @param args if debug is provided debug output is printed
+	 */
 	public static void main(String[] args) {
 		
 		boolean printDebug = false;
@@ -29,8 +32,6 @@ public class ArrayDequeDriver {
 				}
 			}
 		}
-		
-
 
 		//temporary storage for the returned values of peek/get operations
 		Integer temp;
@@ -228,6 +229,12 @@ public class ArrayDequeDriver {
 		
 	}
 
+	/**
+	 * Helper method to print the operation performed, the queue and optionally debug information
+	 * @param operation String describing the previously performed operation
+	 * @param subject the Deque which was the subject of the operation to print
+	 * @param debug whether to request Debug printing (array layout) of the Deque
+	 */
 	private static void printQueueAfterOperation(String operation, ArrayDeque subject, boolean debug) {
 		
 		System.out.println("Operation: " + operation);

@@ -16,7 +16,7 @@ import jsjf.exceptions.EmptyCollectionException;
  * 
  * Implementation of a DropOut Stack using Linked List
  *
- * @param <T>
+ * @param <T> the type of element for the stack
  */
 public class LinkedDropOutStack<T> implements StackADT<T> {
 
@@ -72,7 +72,6 @@ public class LinkedDropOutStack<T> implements StackADT<T> {
 
 		// set the top to null
 		top = null;
-
 	}
 
 	/**
@@ -97,7 +96,6 @@ public class LinkedDropOutStack<T> implements StackADT<T> {
 
 			// decrement count so we can just do the add like normal
 			count--;
-
 		}
 
 		// create a new node
@@ -111,7 +109,6 @@ public class LinkedDropOutStack<T> implements StackADT<T> {
 
 		// increment counter
 		count++;
-	
 	}
 
 	/**
@@ -137,7 +134,6 @@ public class LinkedDropOutStack<T> implements StackADT<T> {
 
 		// return the element
 		return temp;
-
 	}
 
 	/**
@@ -175,7 +171,6 @@ public class LinkedDropOutStack<T> implements StackADT<T> {
 
 		// return the counter variable
 		return count;
-
 	}
 
 	/**

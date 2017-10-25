@@ -16,10 +16,13 @@ import jsjf.exceptions.EmptyCollectionException;
  * It is implemented identically to ArrayStackDriver 
  * so the output can be compared more easily 
  * The two implementations differ in the "full stack" behaviour
- *
  */
-public class LinkedStackDriver {
+public class LinkedDropOutStackDriver {
 
+	/**
+	 * Runs the tests and outputs the results
+	 * @param args ignored
+	 */
 	public static void main(String[] args) {
 
 		// new stack of Integers with capacity of 4
@@ -101,7 +104,5 @@ public class LinkedStackDriver {
 		System.out.println("Stack:");
 		System.out.println(theStack);
 		System.out.println();
-
 	}
-
 }
