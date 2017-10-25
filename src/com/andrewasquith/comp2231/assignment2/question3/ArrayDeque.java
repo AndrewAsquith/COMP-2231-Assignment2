@@ -1,15 +1,22 @@
+/**
+ * @author Andrew Asquith
+ * COMP 2231
+ * Assignment 2
+ * Question 3 - Implementation of Array based Deque
+ */
 package com.andrewasquith.comp2231.assignment2.question3;
+
+// import the Arrays class for the copyOf method
+import java.util.Arrays;
 
 /**
  * 
  * Rather than implementing the whole interface per the java api the following
- * subset of the methods are used 
- * Insert - addFirst(e) offerFirst(e) addLast(e) offerLast(e)
- * Remove - removeFirst() pollFirst() removeLast() pollLast() Examine -
- * getFirst() peekFirst() getLast() peekLast() java.util.Deque throws
- * IllegalStateException so that is used here as well 
- * Front is considered the 0 index (or closest to it) 
- * while back is the highest index
+ * subset of the methods are used Insert - addFirst(e) offerFirst(e) addLast(e)
+ * offerLast(e) Remove - removeFirst() pollFirst() removeLast() pollLast()
+ * Examine - getFirst() peekFirst() getLast() peekLast() java.util.Deque throws
+ * IllegalStateException so that is used here as well Front is considered the 0
+ * index (or closest to it) while back is the highest index
  * 
  * @param <T>
  *            the type of element to be stored by the Deque
@@ -183,12 +190,19 @@ public class ArrayDeque<T> {
 	 */
 	private void pushFirst(T element) {
 
-		if (front == 0) {
-			// if the front is currently 0, shift everything to make room
-			shiftElementsRight();
+		//if the queue isn't empty, make sure layout is good
+		if (size() != 0) {
+			if (front == 0) {
+				// if the front is currently 0, shift everything to make room
+				shiftElementsRight();
+			} else {
+				// if the front isn't 0, decrement it
+				front--;
+			}
 		} else {
-			// if the front isn't 0, decrement it
-			front--;
+			//this is the first element, set front and back to 0
+			front = 0;
+			back = 0;
 		}
 		// set the front to the new element
 		queue[front] = element;
@@ -197,6 +211,13 @@ public class ArrayDeque<T> {
 		count++;
 	}
 
+	/**
+	 * Attempts to add the element to the back of the queue
+	 * 
+	 * @param element
+	 *            the element to add
+	 * @return false if the add fails, true if successful
+	 */
 	public boolean offerLast(T element) {
 
 		// if the queue is full and we can't expand return false
@@ -209,34 +230,21 @@ public class ArrayDeque<T> {
 			expandCapacity();
 		}
 
-		//put the element at the back of the queue
+		// put the element at the back of the queue
 		pushLast(element);
-		
-		//return true on success
+
+		// return true on success
 		return true;
 	}
 
 	/**
-	 * Helper method to put an element at the back of the queu
-	 * and update the appropriate internal variables
-	 * @param element the element to be added
+	 * Adds the element to the back of the queue
+	 * 
+	 * @param element
+	 *            the element to add
+	 * @throws IllegalStateException
+	 *             when the queue is full
 	 */
-	private void pushLast(T element) {
-		
-		if(back == queue.length -1) {
-			shiftElementsLeft();
-		} else {
-			//move the back pointer to new position
-			back++;
-		}
-		
-		// put the new element at the back
-		queue[back] = element;
-		
-		//increase the counter;
-		count++;
-	}
-
 	public void addLast(T element) throws IllegalStateException {
 
 		// if the queue is full and can't expand throw
@@ -248,47 +256,86 @@ public class ArrayDeque<T> {
 		if (size() == queue.length && isExpandable()) {
 			expandCapacity();
 		}
-		
-		//put the element at the back
+
+		// put the element at the back
 		pushLast(element);
 	}
 
 	/**
-	 * Helper method to shift the elements "right" when adding to 0 index
-	 * Since call paths are private we can ensure a valid state before getting here
-	 * which simplifies the implementation ( no index out of bounds should be possible)
+	 * Helper method to put an element at the back of the queu and update the
+	 * appropriate internal variables
+	 * 
+	 * @param element
+	 *            the element to be added
 	 */
-	private void shiftElementsRight()  {
+	private void pushLast(T element) {
 		
-		for (int i = back; i>=front; i-- ) {
-			queue[i+1] = queue[i]; 
+		if (size() == 0) {
+			//this is the first element
+			//set front to 0
+			front = 0;
+		}
+
+		if (back == queue.length - 1) {
+			shiftElementsLeft();
+		} else {
+			// move the back pointer to new position
+			back++;
+		}
+
+		// put the new element at the back
+		queue[back] = element;
+
+		// increase the counter;
+		count++;
+	}
+
+	/**
+	 * Helper method to shift the elements "right" when adding to 0 index Since
+	 * call paths are private we can ensure a valid state before getting here
+	 * which simplifies the implementation ( no index out of bounds should be
+	 * possible)
+	 */
+	private void shiftElementsRight() {
+
+		for (int i = back; i >= front; i--) {
+			queue[i + 1] = queue[i];
 			queue[i] = null;
 		}
+		//we moved back to the right and must increment
+		back++;
 
 	}
 
 	/**
-	 * Helper method to shift the elements "left" when adding to back at last index
-	 * Since call paths are private we can ensure a valid state before getting here
-	 * which simplifies the implementation ( no index out of bounds should be possible)
+	 * Helper method to shift the elements "left" when adding to back at last
+	 * index Since call paths are private we can ensure a valid state before
+	 * getting here which simplifies the implementation ( no index out of bounds
+	 * should be possible)
 	 */
-	private void shiftElementsLeft()  {
-		
+	private void shiftElementsLeft() {
+
 		for (int i = front; i <= back; i++) {
 			queue[i - 1] = queue[i];
 			queue[i] = null;
 		}
+		
+		//we moved front to the left and must decrement
+		front--;
 
 	}
-	
+
+	/**
+	 * Helper method to double the size of the queue
+	 */
 	private void expandCapacity() {
-		// TODO Auto-generated method stub
-		
-		//we're going to renumber the queue as we copy over if necessary
-		
-		//set front to 0
-		
-		//set back to new back
+
+		// for the queue to be full front and back would have to be at either
+		// end
+		// so we can just double the size. If the front/back are not at the
+		// extremes
+		// the queue isn't full and would be shifting instead
+		queue = Arrays.copyOf(queue, queue.length * 2);
 
 	}
 
@@ -299,7 +346,7 @@ public class ArrayDeque<T> {
 	 * @return the element at the front of the queue
 	 */
 	public T pollFirst() {
-		
+
 		if (size() == 0) {
 			return null;
 		}
@@ -415,7 +462,7 @@ public class ArrayDeque<T> {
 	 * @return reference to the element at the front of the queue
 	 */
 	public T peekFirst() {
-		
+
 		if (size() == 0) {
 			return null;
 		}
@@ -445,7 +492,7 @@ public class ArrayDeque<T> {
 	 * @return reference to the element at the back of the queue
 	 */
 	public T peekLast() {
-		
+
 		if (size() == 0) {
 			return null;
 		}
@@ -461,6 +508,7 @@ public class ArrayDeque<T> {
 	 *             if the queue is empty
 	 */
 	public T getLast() throws IllegalStateException {
+		
 		if (size() == 0) {
 			throw new IllegalStateException("queue is empty");
 		}
@@ -468,7 +516,48 @@ public class ArrayDeque<T> {
 		return queue[back];
 	}
 
+	/**
+	 * toString implementation
+	 */
 	public String toString() {
-		return "";
+		String representation = "[Front]";
+
+		if (size() == 0) {
+			return "Queue is empty";
+		}
+
+		for (int i = front; i <= back; i++) {
+			representation += "[" + queue[i] + "]";
+		}
+
+		representation += "[Back]";
+		return representation;
+	}
+
+	/**
+	 * Protected helper method to print the layout of the internal array for debug purposes
+	 * @return String representing the array layout
+	 */
+	protected String printDebug() {
+		String representation = "";
+		
+		for (int i = 0; i < queue.length; i++) {
+			representation += "[" + i + "] ";
+			if (queue[i] == null) {
+				representation += "*";
+			} else {
+				representation += queue[i];
+			}
+			if (i == front) {
+				representation += " <- Front";
+			}
+
+			if (i == back) {
+				representation += " <- Back";
+			}
+
+			representation += System.lineSeparator();
+		}
+		return representation;
 	}
 }
