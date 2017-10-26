@@ -145,8 +145,8 @@ public class ArrayStack<T> implements StackADT<T> {
 	 */
 	public boolean isEmpty() {
 
-		// -1 is the empty indicator for top (not pointing at a valid index)
-		return top == -1;
+		// test if size == 0 (nicer for inheritance than relying on top)
+		return (size() == 0);
 	}
 
 	/**
@@ -175,5 +175,4 @@ public class ArrayStack<T> implements StackADT<T> {
 		representation += "<BOTTOM OF STACK>";
 		return representation;
 	}
-
 }

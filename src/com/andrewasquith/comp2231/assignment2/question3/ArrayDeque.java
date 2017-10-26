@@ -122,7 +122,7 @@ public class ArrayDeque<T> {
 	 * @return boolean indicating if queue is empty
 	 */
 	public boolean isEmpty() {
-		return (count == 0);
+		return (size() == 0);
 	}
 
 	/**

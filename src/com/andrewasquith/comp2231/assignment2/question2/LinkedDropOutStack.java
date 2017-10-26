@@ -159,8 +159,8 @@ public class LinkedDropOutStack<T> implements StackADT<T> {
 	 */
 	public boolean isEmpty() {
 
-		// if count is 0 stack is empty, otherwise not
-		return (count == 0);
+		// if size is 0 stack is empty, otherwise not
+		return (size() == 0);
 	}
 
 	/**
